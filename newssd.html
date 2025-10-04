@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS6.302 SSD Monsoon 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --dark-card: #1e293b;
+            --text: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-animated span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(99, 102, 241, 0.1);
+            animation: float 25s infinite;
+            border-radius: 50%;
+        }
+
+        .bg-animated span:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .bg-animated span:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .bg-animated span:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .bg-animated span:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .bg-animated span:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .bg-animated span:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .bg-animated span:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .bg-animated span:nth-child(8) { left: 80%; animation-delay: 14s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        header h2, header h3 {
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin: 8px 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 20px;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            animation: fadeInUp 0.8s ease;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .light-text-row {
+            color: var(--text-secondary);
+        }
+
+        /* Links */
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary);
+        }
+
+        /* Buttons/Links in tables */
+        table a {
+            background: rgba(99, 102, 241, 0.2);
+            padding: 5px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 2px;
+            transition: all 0.3s ease;
+        }
+
+        table a:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Lists */
+        ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        /* Clock */
+        #clockDisplay {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--primary);
+            text-align: center;
+            padding: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="bg-animated">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <header>
+        <h1>CS6.302 - Software System Development</h1>
+        <h2>Software Engineering Research Center, IIIT Hyderabad</h2>
+        <h3>Monsoon 2025</h3>
+    </header>
+
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#lecture">Schedule</a></li>
+                <li><a href="#cpolicy">Course Policy</a></li>
+                <li><a href="#schedule">Lectures</a></li>
+                <li><a href="#lab">Lab</a></li>
+                <li><a href="#activity">Exams</a></li>
+                <li><a href="#staff">Staff</a></li>
+            </ul>
+        </nav>
+
+        <div class="card fade-in" id="about">
+            <h2>About</h2>
+            <p>Software System Development is a graduate-level course that equips students with a comprehensive understanding of the principles, tools, and practices involved in designing and building modern software systems. Emphasizing a systems-oriented perspective, the course explores foundational and contemporary topics including Operating Systems, Computer Networks, Software Engineering methodologies, and Database Systems (both relational and NoSQL).</p>
+            <p>Students will gain practical experience with industry-relevant tools and technologies such as Bash scripting, SQL, NoSQL databases, HTML, CSS, JavaScript, front-end frameworks, RESTful APIs, Python, and Flask. The course focuses on building scalable, maintainable, and secure software systems while fostering an appreciation for system integration, version control, development workflows, and deployment strategies.</p>
+            <p>Designed for students with a fundamental background in programming, this course bridges theory and practice, preparing them to contribute effectively to complex software development projects in both research and industry settings.</p>
+        </div>
+
+        <div class="card fade-in" id="lecture">
+            <h2>Lecture/Lab Hours</h2>
+            <p>The lectures will be in-person and will be conducted by the Instructor. The lab sessions will be in-person and will be conducted by the Teaching Assistants. The lecture material (slides, lectures notes, supplemental material) can be accessed from this website.</p>
+            <ul>
+                <li><strong>Lecture 🏛️:</strong> 8:30 AM to 9:55 AM - Tuesdays and Fridays - Lecture Hall: H-205 - 29 Classes</li>
+                <li><strong>Lab/Tutorial 💻:</strong> 2:00 PM to 3:00 PM @ SH1 & 2:00 PM to 5:00 PM - Friday - Lecture Hall: SH1 - 14 Sessions</li>
+            </ul>
+            <h3>Office Hours</h3>
+            <p>There are no specific instructor office hours. Instructor is available to meet all the students for 15 minutes before every class to address any queries or concerns. You can also directly write to instructor at <strong>saianirudh.karre[at]iiit.ac.in</strong> to get your queries addressed.</p>
+        </div>
+
+        <div class="card fade-in" id="cpolicy">
+            <h2>Course Policy</h2>
+            <p><a href="https://tinted-rumba-8c6.notion.site/CS6-302-Software-System-Development-670da706e9514d7f9d5b1bcf3c6a1005" target="_blank">Overall Course Notes →</a></p>
+            
+            <h3>Teaching and Learning Methodology</h3>
+            <p>This course is designed to help learners get the essence of principles behind good software system development. Learners will be taught concepts by making them work on real-life problems. This will promote deeper engagement, deeper understanding and resembles the true career situation.</p>
+
+            <h3>Academic Honesty</h3>
+            <p>If A helps B in a Task X → B doesn't get opportunity to do task X, B doesn't learn the skill to do task X, B gets spoilt-dependent-unfit for jobs requiring skills of task X. You may think it is okay to do it only once and not repeat it, but when a task is done once it gets wired into the brain as being "okay" and unless there is a strong reason it will repeat. If you want to help, help to learn!</p>
+
+            <h3>Zero Tolerance on Plagiarism</h3>
+            <p>This course requires students to submit assignments, participate in in-class activities, give mid and final exams, work with groups on projects and so on. Any forms of cheating or plagiarism will result in a score of "0" for projects, assignments or exams. Egregious cases will result in a grade of "F" for the course.</p>
+
+            <h3>Absentee Policy</h3>
+            <p>You are expected to attend and participate in all lectures and lab sessions (graded or ungraded). However, if any quiz/activity is held during the lecture session that you are absent, you will be given a '0' for the same. There will be NO make up classes/quizzes/activities.</p>
+
+            <h3>Use of AI Tools</h3>
+            <p>Students are free to use different AI tools like ChatGPT, Co-pilot, etc. for the course assignments/activities. However, please mention what tools and how they have been used in the submission report. Please note that these tools can mislead or provide wrong solutions. It's important to know the concept before using the tools.</p>
+
+            <h3>Grading Distribution</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Deliverables</th>
+                            <th>Weightage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Assignment (4)</td><td>15%</td></tr>
+                        <tr><td>Lab Activities (14)</td><td>15%</td></tr>
+                        <tr><td>Practice and Class Activity (5)</td><td>10%</td></tr>
+                        <tr><td>QUIZ (2)</td><td>10%</td></tr>
+                        <tr><td>MID (1)</td><td>10%</td></tr>
+                        <tr><td>Final Exam (Team Project)</td><td>40%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card fade-in" id="schedule">
+            <h2>Lecture Schedule & Content</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Schedule</th>
+                            <th>Lecture Content</th>
+                            <th>Material</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="light-text-row">
+                            <td>1</td>
+                            <td>01-Aug-25</td>
+                            <td>Course Intro - Software Systems</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/SSD_Monsoon2025.pdf" target="_blank">Slides</a> <a href="https://tinted-rumba-8c6.notion.site/Software-System-2456a6248bf68034bc14cfc44dc93062" target="_blank">Notes</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>2</td>
+                            <td>05-Aug-25</td>
+                            <td>Relational Data</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/data.pdf" target="_blank">Slides</a> <a href="https://tinted-rumba-8c6.notion.site/Structured-Databases-2456a6248bf6805f83e1cbf0a58761ec" target="_blank">Notes</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>3</td>
+                            <td>08-Aug-25</td>
+                            <td>Unstructured Data - Session 1</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/NoSQLClass.pdf" target="_blank">Slides</a> <a href="https://tinted-rumba-8c6.notion.site/Unstructured-Databases-24b6a6248bf680679b36e76c33d301c4" target="_blank">Notes</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>4</td>
+                            <td>12-Aug-25</td>
+                            <td><s>Unstructured Data - Session 2</s> <span class="badge badge-warning">Cancelled - Rain ⛈️</span></td>
+                            <td><a href="https://tinted-rumba-8c6.notion.site/Unstructured-Databases-24b6a6248bf680679b36e76c33d301c4" target="_blank">Notes</a> <a href="https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/ISS_Spring_2025/mongo.txt" target="_blank">Scripts</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>5</td>
+                            <td>19-Aug-25</td>
+                            <td>Unstructured Data - Session 2</td>
+                            <td><a href="https://tinted-rumba-8c6.notion.site/Worked-out-Examples-2546a6248bf68073a460cbfc52825dfd" target="_blank">Practice</a> <a href="https://tinted-rumba-8c6.notion.site/Some-Concepts-2546a6248bf6806fafd0d8260507fc03" target="_blank">Notes</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>6</td>
+                            <td>22-Aug-25</td>
+                            <td>Web - HTML</td>
+                            <td><a href="https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Web.pdf" target="_blank">Web-Slides</a> <a href="https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/HTML.pdf" target="_blank">HTML-Slides</a> <a href="https://tinted-rumba-8c6.notion.site/Web-Technology-2566a6248bf6800488d0c13a992502e4" target="_blank">Notes</a> <a href="https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/refs/heads/main/Course/SSD_Monsoon2025/html_super_demo_single_file_html.html" target="_blank">Scripts</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>7</td>
+                            <td>26-Aug-25</td>
+                            <td>Web - CSS</td>
+                            <td><a href="https://tinted-rumba-8c6.notion.site/CSS-2566a6248bf680dc8299c320f04a5141" target="_blank">Notes</a> <a href="https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/refs/heads/main/Course/SSD_Monsoon2025/css_super_demo_single_file_html.html" target="_blank">Scripts</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>8</td>
+                            <td>29-Aug-25</td>
+                            <td>JavaScript - Session 1</td>
+                            <td><a href="https://github.com/sai11101989/sai11101989.github.io/tree/main/Course/SSD_Monsoon2025/JS1" target="_blank">Scripts</a> <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/ISS_Spring_2025/6_Class6_JavaScript.pdf" target="_blank">Slides</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>9</td>
+                            <td>02-Sep-25</td>
+                            <td>JavaScript Session 2</td>
+                            <td><a href="https://github.com/sai11101989/sai11101989.github.io/tree/main/Course/SSD_Monsoon2025/JS2" target="_blank">Scripts</a> <a href="https://tinted-rumba-8c6.notion.site/JavaScript-2606a6248bf680138283f6419bd87777" target="_blank">Notes</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>10</td>
+                            <td>04-Sep-25</td>
+                            <td><s>JavaScript Session 3</s> <span class="badge badge-warning">Cancelled - Instructor Sick 🤒</span></td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>9-Sep-25</td>
+                            <td>JavaScript Session 3</td>
+                            <td><a href="https://tinted-rumba-8c6.notion.site/Data-Structures-2686a6248bf680098b38d12626ad1012" target="_blank">Notes</a> <a href="https://github.com/sai11101989/sai11101989.github.io/tree/main/Course/SSD_Monsoon2025/JS3" target="_blank">Scripts</a></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>12-Sep-25</td>
+                            <td>React JS</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>26-Sep-25</td>
+                            <td>System Design - Session 1</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>26-Sep-25 @ 3PM-5PM</td>
+                            <td>System Design - Session 2</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>30-Sep-25</td>
+                            <td>SHELL - Session 1</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>03-Oct-25</td>
+                            <td>SHELL - Session 2</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>17-27</td>
+                            <td>Oct-Nov 2025</td>
+                            <td>Python Sessions (1-11) & Retrospection</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card fade-in" id="lab">
+            <h2>Lab Schedule & Content</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lab No.</th>
+                            <th>Schedule</th>
+                            <th>Topic</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="light-text-row">
+                            <td>01</td>
+                            <td>7-Aug-2025</td>
+                            <td>Git Session</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Labs/Lab01/SSD%20Tutorial%20%20-%20GIT.pdf" target="_blank">Slides</a> <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Labs/Lab01/SSD_GIT_LAB.pdf" target="_blank">Activity</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>02</td>
+                            <td>14-Aug-2025 @ 2PM-3PM</td>
+                            <td>SQL Session</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Labs/Lab01/Lab-2.pdf" target="_blank">Slides</a> <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Labs/Lab01/Activity%20-%20Lab%202.pdf" target="_blank">Activity</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>03</td>
+                            <td>21-Aug-2025 @ 2PM-3PM</td>
+                            <td>NoSQL Session</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/S
