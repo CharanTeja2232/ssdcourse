@@ -346,6 +346,60 @@
     </style>
 </head>
 <body>
+    <script>
+        
+(function () {
+  // Utility function for ISO timestamps
+  const now = () => new Date().toISOString();
+
+  // Classify the clicked/viewed element type
+  function classify(el) {
+    if (!el || !el.tagName) return "other";
+    const t = el.tagName.toLowerCase();
+    if (t === "img") return "image";
+    if (t === "button") return "button";
+    if (t === "a") return "link";
+    if (t === "select") return "drop_down";
+    if (t === "input" || t === "textarea") return "text";
+    return "other";
+  }
+
+  // Log helper
+  function log(eventType, el) {
+    console.log({
+      timestamp: now(),
+      type_of_event: eventType,
+      event_object: classify(el),
+      selector: el.tagName.toLowerCase() + (el.id ? "#" + el.id : ""),
+      label: el.alt || el.innerText?.trim() || el.value || "",
+    });
+  }
+
+  // ---- CLICK EVENTS ----
+  document.addEventListener("click", (e) => {
+    const el = e.target;
+    log("click", el);
+  });
+
+  // ---- VIEW EVENTS ----
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        log("view", entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  // Observe only important elements
+  document.querySelectorAll("img, a, button, select, input, textarea").forEach((el) => {
+    observer.observe(el);
+  });
+
+  console.info("✅ Minimal Event Tracker running — logs will appear in console.");
+})();
+
+    </script>
+
     <div class="bg-animated">
         <span></span>
         <span></span>
@@ -583,4 +637,223 @@
                             <td>03</td>
                             <td>21-Aug-2025 @ 2PM-3PM</td>
                             <td>NoSQL Session</td>
-                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/S
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Labs/Lab01/NoSQL%20Lab3.pdf" target="_blank">Slides</a> <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Labs/Lab01/Activity_lab3.pdf" target="_blank">Activity</a> <a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Labs/Lab01/NoSQL_Illustration.pdf" target="_blank">Example</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>04</td>
+                            <td>28-Aug-2025 @ 2PM-3PM</td>
+                            <td>DOM</td>
+                            <td><a href="https://github.com/sai11101989/sai11101989.github.io/tree/main/Course/SSD_Monsoon2025/DOM" target="_blank">Slides & Activity</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>05</td>
+                            <td>04-Sept-2025 @ 2PM-5PM</td>
+                            <td>JS Session</td>
+                            <td><a href="https://github.com/sai11101989/sai11101989.github.io/tree/main/Course/SSD_Monsoon2025/JSLab" target="_blank">Slides & Activity</a></td>
+                        </tr>
+                        <tr>
+                            <td>06</td>
+                            <td>18-Sept-2025 @ 2PM-3PM</td>
+                            <td>REST API</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>07</td>
+                            <td>19-Sept-2025 @ 8:30AM-9:55AM</td>
+                            <td>MERN Session - NodeJS</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>08-16</td>
+                            <td>Sept-Nov 2025</td>
+                            <td>MERN, SHELL, Python & FASTAPI Sessions</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card fade-in" id="activity">
+            <h2>Exams & Assignments</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Exam Type</th>
+                            <th>Announcement</th>
+                            <th>Submission Due</th>
+                            <th>Material</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="light-text-row">
+                            <td>1</td>
+                            <td>Assignment - SQL, NoSQL</td>
+                            <td>15-Aug-2025</td>
+                            <td>5-Sept-2025</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Assignment_1.pdf" target="_blank">Paper</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Assignment - Web</td>
+                            <td>6-Sept-2025</td>
+                            <td>27-Sept-2025</td>
+                            <td><a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/sai11101989/sai11101989.github.io/main/Course/SSD_Monsoon2025/Assignment_2.pdf" target="_blank">Paper</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Assignment - SHELL</td>
+                            <td>28-Sept-2025</td>
+                            <td>19-Oct-2025</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Assignment - Python</td>
+                            <td>20-Oct-2025</td>
+                            <td>10-Nov-2025</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>5</td>
+                            <td>SQL Practice</td>
+                            <td>5-Aug-2025</td>
+                            <td>10-Aug-2025</td>
+                            <td><a href="https://tinted-rumba-8c6.notion.site/Worked-out-Examples-2456a6248bf6800fa6cfc3e688a58ddd" target="_blank">Paper</a></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>6</td>
+                            <td>HTML & CSS Practice</td>
+                            <td>15-Aug-2025</td>
+                            <td>21-Aug-2025</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>7</td>
+                            <td>QUIZ 1</td>
+                            <td>29-Aug-2025 2:30 PM</td>
+                            <td>29-Aug-2025 3:30 PM</td>
+                            <td><span class="badge badge-success">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>QUIZ 2</td>
+                            <td>31-Oct-2025 2:30 PM</td>
+                            <td>31-Oct-2025 3:30 PM</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>MID Exam</td>
+                            <td>TBA</td>
+                            <td>TBA</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Final Project</td>
+                            <td>1-Sept-2025</td>
+                            <td>2-Dec-2025</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                        <tr class="light-text-row">
+                            <td>11</td>
+                            <td>Class Activity - Profile Page</td>
+                            <td>26-Aug-2025</td>
+                            <td>26-Aug-2025</td>
+                            <td><a href="https://forms.office.com/r/6kpKVY0eqP" target="_blank">Submission</a></td>
+                        </tr>
+                        <tr>
+                            <td>12-14</td>
+                            <td>Class Activities (JavaScript, SHELL, Python)</td>
+                            <td>Various dates</td>
+                            <td>Same day</td>
+                            <td><span class="badge badge-warning">TBA</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card fade-in" id="staff">
+            <h2>Staff</h2>
+            <h3>Instructors</h3>
+            <p>
+                <a href="https://sites.google.com/view/abhishek-singh/home" target="_blank">Dr. Abhishek Singh</a>, 
+                <a href="https://sai11101989.github.io" target="_blank">Dr. Sai Anirudh Karre</a>
+            </p>
+            <h3>Teaching Assistants</h3>
+            <p>Chirag Dhamija, Tejas Cavale, Divyansh Pandey, Aaditya Vardhan Narain, Kunal Kamalkishire Bhosikar, Chandrasekar S, Ashwani Raj, Hiya Bhatt</p>
+        </div>
+
+        <footer>
+            <div id="clockDisplay"></div>
+            <p style="margin-top: 20px;">
+                <strong>Important Links:</strong><br>
+                <a href="https://intranet.iiit.ac.in/offices/static/files/Almanac_M25_Final-Ver2.1.pdf" target="_blank">Monsoon 2025 Almanac</a> | 
+                <a href="https://intranet.iiit.ac.in/offices/static/files/Lecture%20timetable%20for%20Monsoon_2025_V1.2.pdf" target="_blank">Lecture Timetable</a> | 
+                <a href="https://intranet.iiit.ac.in/offices/static/files/Tutorials%26LAB_Schedule_M25-V2.pdf" target="_blank">Lab Timetable</a> | 
+                <a href="https://courses.iiit.ac.in/course/view.php?id=5324" target="_blank">Courses Portal</a>
+            </p>
+            <p style="margin-top: 20px; color: var(--text-secondary); font-size: 0.9rem;">
+                Course site hosted by github.io<br>
+                Course Policy credits to <a href="https://faculty.iiit.ac.in/~raghu.reddy/Home.html">Dr. Raghu Reddy</a> & <a href="https://karthikvaidhyanathan.com/">Dr. Karthik Vaidhyanathan</a><br>
+                <a href="https://serc.iiit.ac.in">Software Engineering Research Center</a>, <a href="https://iiit.ac.in">IIIT Hyderabad</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Clock function
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clockDisplay').innerHTML = now.toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
